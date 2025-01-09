@@ -1,0 +1,26 @@
+# Source
+SRC_POSTGRES_DB=pactravel
+SRC_POSTGRES_HOST=localhost
+SRC_POSTGRES_USER=postgres
+SRC_POSTGRES_PASSWORD=postgres
+SRC_POSTGRES_PORT=5444
+
+# DWH
+DWH_POSTGRES_DB=pactravel-dwh
+DWH_POSTGRES_HOST=localhost
+DWH_POSTGRES_USER=postgres
+DWH_POSTGRES_PASSWORD=postgres
+DWH_POSTGRES_PORT=5445
+
+# SENTRY DSN
+SENTRY_DSN=https://49678611df1bbf949bfe4dde03c2485d@o4508504148475904.ingest.us.sentry.io/4508508080898048 
+
+# DIRECTORY
+# Adjust with your directory. make sure to write full path
+DIR_ROOT_PROJECT=/mnt/d/Coding/Training/Data_Warehouse/Week_07/pactravel-dataset
+DIR_TEMP_LOG=/mnt/d/Coding/Training/Data_Warehouse/Week_07/pactravel-dataset/pipeline/temp/log
+DIR_TEMP_DATA=/mnt/d/Coding/Training/Data_Warehouse/Week_07/pactravel-dataset/pipeline/temp/data
+DIR_EXTRACT_QUERY=/mnt/d/Coding/Training/Data_Warehouse/Week_07/pactravel-dataset/pipeline/src_query/extract
+DIR_LOAD_QUERY=/mnt/d/Coding/Training/Data_Warehouse/Week_07/pactravel-dataset/pipeline/src_query/load
+DIR_DBT_TRANSFORM=/mnt/d/Coding/Training/Data_Warehouse/Week_07/pactravel-dataset/pipeline/src_query/dbt_transform
+DIR_LOG=/mnt/d/Coding/Training/Data_Warehouse/Week_07/pactravel-dataset/logs/
