@@ -59,8 +59,83 @@ This project implements a Data Warehouse (DWH) for Pactravel, designed to enhanc
 3. **Transformation:** DBT transforms the data into data marts and the final data warehouse.
 
 ### Setup and Execution
-1. **Error Handling:** Python scripts manage errors, with Sentry SDK sending alerts via email.
-2. **Scheduling:** Data updates are scheduled using cron jobs for automation.
+
+### 1. Requirements
+
+- OS :
+    - Linux
+    - WSL (Windows Subsystem For Linux)
+- Tools :
+    - Dbeaver
+    - Docker
+    - Cron
+    - DBT
+- Programming Language :
+    - Python
+    - SQL
+- Python Libray :
+    - Luigi
+    - Pandas
+    - Sentry-SDK
+- Platforms :
+    - Sentry
+
+### 2. Preparations
+1. Clone the repository (using git lfs clone).
+2. Create a `.env` file with the following variables:
+
+```env
+# Source
+SRC_POSTGRES_DB=olist-src
+SRC_POSTGRES_HOST=localhost
+SRC_POSTGRES_USER=[YOUR USERNAME]
+SRC_POSTGRES_PASSWORD=[YOUR PASSWORD]
+SRC_POSTGRES_PORT=[YOUR PORT]
+
+# SENTRY DSN
+SENTRY_DSN=... # Fill with your Sentry DSN Project 
+
+# DWH
+# Adjust with your directory. make sure to write full path
+# Remove comment after each value
+DIR_ROOT_PROJECT=... # <project_dir>
+DIR_TEMP_LOG=... # <project_dir>/pipeline/temp/log
+DIR_TEMP_DATA=... # <project_dir>/pipeline/temp/data
+DIR_EXTRACT_QUERY=... # <project_dir>/pipeline/src_query/extract
+DIR_LOAD_QUERY=... # <project_dir>/pipeline/src_query/load
+DIR_TRANSFORM_QUERY=... # <project_dir>/pipeline/src_query/transform
+DIR_LOG=... # <project_dir>/logs/
+```
+
+- **Run Data Sources & Data Warehouses** :
+  ```
+  docker compose up -d
+  ```
+
+- **Dataset**
+    - Source: Pactravel
+    - DWH:
+        - staging schema: pactravel
+        - final schema: final
+
+3. Ensure the `/helper/source/init.sql` script has the data preloaded.
+4. Run `elt_main.py` to execute the pipeline.
+5. Monitor logs in the `/logs/logs.log/` directory for any errors.
+
+**Run this command on the background process:**
+```bash
+luigid --port 8082
+```
+
+**To run the pipeline directly from the terminal:**
+```bash
+python3 elt_main.py
+```
+
+**Alternatively, schedule the pipeline using cron to run every hour:**
+```bash
+0 * * * * <project_dir>/elt_run.sh
+```
 
 ### Code Highlights
 - Use of Python and Luigi for orchestration.
@@ -72,12 +147,11 @@ This project implements a Data Warehouse (DWH) for Pactravel, designed to enhanc
 2. **DBT Models:** Develop DBT models for transforming data into the desired schema.
 3. **Cron Scheduling:** Schedule data updates using cron jobs for continuous data flow.
 
-## Requirements
-1. PostgreSQL database for storage.
-2. Python environment for scripts.
-3. DBT for data transformation.
-4. Luigi for orchestration.
-5. Sentry SDK for error alerts.
+In thats project directory, **create and use virtual environment**.
+Then Install dependencies with:
+```bash
+pip install -r requirements.txt
+```
 
 ## Results
 ### Example Queries
