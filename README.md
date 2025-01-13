@@ -58,6 +58,51 @@ This project implements a Data Warehouse (DWH) for Pactravel, designed to enhanc
 ## ERD Final Plan
 ![ERD Final](img_assets/ERD_Final.png)
 
+Here’s the updated and detailed content:
+
+### Additional Business Processes and Details
+
+#### Business Process: Bookings / Order Transaction
+- **Declare Grain:**
+  - A single data point represents a flight booking order by a customer.
+  - A single data point represents a hotel booking order by a customer.
+- **Identify the Dimensions:**
+  - `dim_customer`
+  - `dim_airports`
+  - `dim_aircrafts`
+  - `dim_airlines`
+  - `dim_date`
+  - `dim_hotel`
+- **Identify the Facts:**
+  - `fct_flight_bookings`
+  - `fct_hotel_bookings`
+
+#### Business Process: Daily Bookings Volume
+- **Declare Grain:**
+  - A single data point represents daily total revenue for each product (flight and hotel).
+- **Identify the Dimensions:**
+  - `dim_date`
+- **Identify the Fact:**
+  - `fct_daily_revenue`
+
+
+### Business Process and Performance Metric Table
+
+| Business Process         | Performance Metric                          |
+|--------------------------|---------------------------------------------|
+| Bookings / Order Transaction | Number of bookings, the most hotel/airlines bookings, detail bookings               |
+| Daily Bookings Volume    | Daily total revenue by product (flight, hotel), Trend of revenue, Average booking value comparison |
+
+
+### Bus Matrix for Final Schema Plan
+
+| Fact                    | dim_customer | dim_airports | dim_aircrafts | dim_airlines | dim_date | dim_hotel |
+|-------------------------|--------------|--------------|---------------|--------------|----------|-----------|
+| `fct_flight_bookings`   | ✓            | ✓            | ✓             | ✓            | ✓        |           |
+| `fct_hotel_bookings`    | ✓            |              |               |              | ✓        | ✓         |
+| `fct_daily_revenue`     |              |              |               |              | ✓        |           |
+
+
 
 ## ELT with Python & SQL
 
