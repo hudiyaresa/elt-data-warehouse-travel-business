@@ -53,7 +53,7 @@ This project implements a Data Warehouse (DWH) for Pactravel, designed to enhanc
 | `dim_airports`  | Type 1   | Stores the most recent data without history.          |
 
 ## ERD Source
-![ERD Source](img_assets/ERD_Source_.png)
+![ERD Source](img_assets/ERD_Source.png)
 
 ## ERD Final Plan
 ![ERD Final](img_assets/ERD_Final.png)
