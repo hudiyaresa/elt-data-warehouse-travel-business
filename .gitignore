@@ -3,3 +3,5 @@ venv
 .venv
 .venv2
 *.log
+__pycache__
+temp

@@ -1,44 +1,104 @@
-# PACTRAVEL - ELT Pipeline Orhcestration For Exercise 3
-## How to use this Data?
-1. Requirements
-2. Preparations
+# ELT Pipeline Orhcestration - Pactravel Data Warehouse
 
-### 1. Requirements
-- Tools :
-    - Dbeaver/SQL Client
-    - Docker
+## Overview
+This project implements a Data Warehouse (DWH) for Pactravel, designed to enhance data analysis capabilities for better strategic decision-making. It utilizes Slowly Changing Dimensions (SCD) strategies and an ELT pipeline with DBT, Python, SQL, and Luigi for orchestration. The final output provides enriched insights into daily booking volumes and revenue trends.
 
-### 2. Preparations
-- **Clone repo** :
-  ```
-  # Clone
-  git clone [repo_link]
-  ```
-- **Create .env file** in project root directory :
-  ```
-    # Source
-    SRC_POSTGRES_DB=pactravel
-    SRC_POSTGRES_HOST=localhost
-    SRC_POSTGRES_USER=postgres
-    SRC_POSTGRES_PASSWORD=mypassword
-    SRC_POSTGRES_PORT=5433
+## Table of Contents
+1. [Overview](#overview)
+2. [Requirements Gathering](#requirements-gathering)
+3. [Slowly Changing Dimension (SCD)](#slowly-changing-dimension-scd)
+   1. [Strategy](#strategy)
+4. [ELT with Python & SQL](#elt-with-python--sql)
+   1. [Workflow Description](#workflow-description)
+   2. [Setup and Execution](#setup-and-execution)
+   3. [Code Highlights](#code-highlights)
+5. [Orchestrate ELT with Luigi](#orchestrate-elt-with-luigi)
+   1. [Setup Instructions](#setup-instructions)
+6. [Requirements](#requirements)
+7. [Results](#results)
+8. [References](#references)
 
-    # DWH
-    DWH_POSTGRES_DB=pactravel-dwh
-    DWH_POSTGRES_HOST=localhost
-    DWH_POSTGRES_USER=postgres
-    DWH_POSTGRES_PASSWORD=mypassword
-    DWH_POSTGRES_PORT=5434
-    ```
+## Requirements Gathering
+### Key Questions and Answers
+1. **What is the primary objective of the data warehouse for this project?**  
+   To provide a centralized system for tracking daily booking volumes (for both flight and hotel bookings) and monitoring average ticket prices over time.
+2. **What dimensions are important for analyzing daily booking volumes?**  
+   Date, customer demographics, airport details, airline, and hotel details.
+3. **What level of granularity is required for the flight bookings data?**  
+   Data should be detailed down to individual bookings, including date, customer, price, and flight details.
+4. **Should we implement a Slowly Changing Dimension (SCD) strategy for certain dimensions?**  
+   Yes, we will implement SCD Type 2 for dimensions like `dim_customers`, `dim_hotels`, and `dim_airlines`.
+5. **How frequently should the data warehouse be updated?**  
+   The data warehouse should be updated daily to ensure timely and accurate reporting.
+6. **How should historical changes be handled in the data warehouse?**  
+   Historical changes should be captured using SCD Type 2 to maintain a full history of data changes.
 
+### Summary
+**Point Description:** The travel business currently operates transactionally, with data stored effectively in databases for booking flight and hotel reservations.  
+**Problem:** There is no dedicated analytical database to leverage stored data for strategic planning to increase revenue.  
+**Solution:**  
+1. **Data Warehouse:** Implement a data warehouse to process stored data analytically, revealing patterns, trends, and potential strategies to enhance travel business revenue.
+2. **SCD Type 2 Implementation:** Utilize DBT snapshots for SCD Type 2, preserving historical data for deeper analysis.
+3. **ELT Pipeline:** Implement an ELT pipeline using Luigi and DBT, including error logging and alerting via Python and Sentry SDK.
+4. **Scheduling:** Use cron for scheduling data updates to keep the data warehouse current.
 
-- **Run Data Sources & Data Warehouses** :
-  ```
-  docker compose up -d
-  ```
+## Slowly Changing Dimension (SCD)
+### Strategy
+| Dim Tables   | SCD Type | Explanation                                           |
+|--------------|----------|-------------------------------------------------------|
+| `dim_customers` | Type 2   | Tracks changes in customer details over time.         |
+| `dim_hotels`    | Type 2   | Captures historical changes in hotel information.     |
+| `dim_airlines`  | Type 2   | Maintains history of airline data changes.            |
+| `dim_aircrafts` | Type 1   | Updates data without retaining historical changes.    |
+| `dim_airports`  | Type 1   | Stores the most recent data without history.          |
 
-- **Dataset**
-    - Source: Pactravel
-    - DWH:
-        - staging schema: pactravel
-        - final schema: final
+## ELT with Python & SQL
+### Workflow Description
+1. **Extraction:** Data is extracted from PostgreSQL databases using Python and Luigi.
+2. **Loading:** Data is loaded into public and staging schemas in the data warehouse.
+3. **Transformation:** DBT transforms the data into data marts and the final data warehouse.
+
+### Setup and Execution
+1. **Error Handling:** Python scripts manage errors, with Sentry SDK sending alerts via email.
+2. **Scheduling:** Data updates are scheduled using cron jobs for automation.
+
+### Code Highlights
+- Use of Python and Luigi for orchestration.
+- DBT for data transformation and implementing SCD strategies.
+
+## Orchestrate ELT with Luigi
+### Setup Instructions
+1. **Python & Luigi:** Install required Python packages and set up Luigi for orchestration.
+2. **DBT Models:** Develop DBT models for transforming data into the desired schema.
+3. **Cron Scheduling:** Schedule data updates using cron jobs for continuous data flow.
+
+## Requirements
+1. PostgreSQL database for storage.
+2. Python environment for scripts.
+3. DBT for data transformation.
+4. Luigi for orchestration.
+5. Sentry SDK for error alerts.
+
+## Results
+### Example Queries
+To provide insights for the management, you can run the following queries to see the booking trends and pricing strategies:
+```sql
+-- Daily booking volume by date
+SELECT departure_date, COUNT(*) AS total_bookings 
+FROM fct_flight_bookings 
+GROUP BY departure_date 
+ORDER BY departure_date;
+
+-- Average hotel booking price by city
+SELECT city, AVG(price) AS avg_price 
+FROM fct_hotel_bookings 
+GROUP BY city 
+ORDER BY avg_price DESC;
+```
+
+## References
+1. [DBT Documentation](https://docs.getdbt.com/)
+2. [Luigi Documentation](https://luigi.readthedocs.io/)
+3. [Sentry SDK](https://docs.sentry.io/platforms/python/)
+
+```

@@ -3,9 +3,9 @@
 -- Drop table
 
 -- DROP TABLE aircrafts;
-CREATE SCHEMA IF NOT EXISTS pactravel AUTHORIZATION postgres;
+CREATE SCHEMA IF NOT EXISTS public AUTHORIZATION postgres;
 
-CREATE TABLE pactravel.aircrafts (
+CREATE TABLE public.aircrafts (
 	aircraft_name varchar NULL,
 	aircraft_iata varchar NULL,
 	aircraft_icao varchar NULL,
@@ -20,7 +20,7 @@ CREATE TABLE pactravel.aircrafts (
 
 -- DROP TABLE airlines;
 
-CREATE TABLE pactravel.airlines (
+CREATE TABLE public.airlines (
 	airline_id int4 NOT NULL,
 	airline_name varchar NULL,
 	country varchar NULL,
@@ -37,7 +37,7 @@ CREATE TABLE pactravel.airlines (
 
 -- DROP TABLE airports;
 
-CREATE TABLE pactravel.airports (
+CREATE TABLE public.airports (
 	airport_id int4 NOT NULL,
 	airport_name varchar NULL,
 	city varchar NULL,
@@ -53,7 +53,7 @@ CREATE TABLE pactravel.airports (
 
 -- DROP TABLE customers;
 
-CREATE TABLE pactravel.customers (
+CREATE TABLE public.customers (
 	customer_id int4 NOT NULL,
 	customer_first_name varchar NULL,
 	customer_family_name varchar NULL,
@@ -71,7 +71,7 @@ CREATE TABLE pactravel.customers (
 
 -- DROP TABLE hotel;
 
-CREATE TABLE pactravel.hotel (
+CREATE TABLE public.hotel (
 	hotel_id int4 NOT NULL,
 	hotel_name varchar NULL,
 	hotel_address varchar NULL,
@@ -88,7 +88,7 @@ CREATE TABLE pactravel.hotel (
 
 -- DROP TABLE flight_bookings;
 
-CREATE TABLE pactravel.flight_bookings (
+CREATE TABLE public.flight_bookings (
 	trip_id int4 NOT NULL,
 	customer_id int4 NULL,
 	flight_number varchar(32) NOT NULL,
@@ -117,7 +117,7 @@ CREATE TABLE pactravel.flight_bookings (
 
 -- DROP TABLE hotel_bookings;
 
-CREATE TABLE pactravel.hotel_bookings (
+CREATE TABLE public.hotel_bookings (
 	trip_id int4 NOT NULL,
 	customer_id int4 NULL,
 	hotel_id int4 NULL,
