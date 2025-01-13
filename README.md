@@ -100,5 +100,3 @@ ORDER BY avg_price DESC;
 1. [DBT Documentation](https://docs.getdbt.com/)
 2. [Luigi Documentation](https://luigi.readthedocs.io/)
 3. [Sentry SDK](https://docs.sentry.io/platforms/python/)
-
-```
