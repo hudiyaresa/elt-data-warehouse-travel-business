@@ -58,9 +58,7 @@ This project implements a Data Warehouse (DWH) for Pactravel, designed to enhanc
 ## ERD Final Plan
 ![ERD Final](img_assets/ERD_Final.png)
 
-Here’s the updated and detailed content:
-
-### Additional Business Processes and Details
+### Business Processes and Details
 
 #### Business Process: Bookings / Order Transaction
 - **Declare Grain:**
