@@ -210,6 +210,8 @@ pip install -r requirements.txt
 
 ![finish dwh results](img_assets/luigi_results.png)
 
+![dwh results](img_assets/results_dwh.png)
+
 ### Example Queries
 
 ### Booking Trends and Pricing Strategy Insights
