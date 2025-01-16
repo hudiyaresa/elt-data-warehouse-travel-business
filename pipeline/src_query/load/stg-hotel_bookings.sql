@@ -13,7 +13,7 @@ SELECT
         WHEN breakfast_included::boolean = false THEN 'No'
         ELSE 'Unknown'
     END AS breakfast_included,
-    (check_in_date - floor(random() * 30)::int) as hotel_booking_date
+    check_in_date as hotel_booking_date
 
 FROM public.hotel_bookings
 

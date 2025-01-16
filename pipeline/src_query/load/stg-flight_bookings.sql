@@ -16,7 +16,7 @@ SELECT
     travel_class,
     seat_number,
     price,
-    (departure_date - floor(random() * 30)::int) as flight_booking_date
+    departure_date as flight_booking_date
 
 
 FROM public.flight_bookings
