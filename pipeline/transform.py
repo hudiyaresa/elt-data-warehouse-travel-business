@@ -30,7 +30,7 @@ class Transform(luigi.Task):
         try:
             with open (file = f'{DIR_TEMP_LOG}/logs.log', mode = 'a') as f :
                 sp.run(
-                    f"cd {DIR_DBT_TRANSFORM} && dbt deps && dbt run && dbt snapshot",
+                    f"cd {DIR_DBT_TRANSFORM} && dbt deps && dbt seed && dbt run && dbt snapshot",
                     stdout = f,
                     stderr = sp.PIPE,
                     text = True,
