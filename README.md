@@ -20,18 +20,24 @@ This project implements a Data Warehouse (DWH) for Pactravel, designed to enhanc
 
 ## Requirements Gathering
 ### Key Questions and Answers
-1. **What is the primary objective of the data warehouse for this project?**  
-   To provide a centralized system for tracking daily booking volumes (for both flight and hotel bookings) and monitoring average ticket prices over time.
-2. **What dimensions are important for analyzing daily booking volumes?**  
-   Date, customer demographics, airport details, airline, and hotel details.
-3. **What level of granularity is required for the flight bookings data?**  
-   Data should be detailed down to individual bookings, including date, customer, price, and flight details.
-4. **Should we implement a Slowly Changing Dimension (SCD) strategy for certain dimensions?**  
-   Yes, we will implement SCD Type 2 for dimensions like `dim_customers`, `dim_hotels`, and `dim_airlines`.
-5. **How frequently should the data warehouse be updated?**  
-   The data warehouse should be updated daily to ensure timely and accurate reporting.
-6. **How should historical changes be handled in the data warehouse?**  
-   Historical changes should be captured using SCD Type 2 to maintain a full history of data changes.
+
+1. **What is the main goal of the data warehouse for this project?**  
+   The goal is to create a central system where we can track daily bookings for flights and hotels, and monitor how ticket prices change over time.
+
+2. **What factors are important for understanding daily booking numbers?**  
+   Important factors include the date, customer details, airport and airline information, and hotel details.
+
+3. **How detailed should the flight booking data be?**  
+   We need to track each booking in detail, including the date, customer, price, and flight information.
+
+4. **Do we need to track changes over time for certain types of data?**  
+   Yes, we should track changes for data like customer information, hotels, and airlines, so we can keep a complete history of these changes.
+
+5. **How often should we update the data warehouse?**  
+   The data warehouse should be updated every day to ensure that our reports are accurate and up to date.
+
+6. **How should we handle changes to historical data?**  
+   We should store different versions of the data when it changes over time, so we can always see what the data looked like in the past.
 
 ### Summary
 **Point Description:** The travel business currently operates transactionally, with data stored effectively in databases for booking flight and hotel reservations.  
